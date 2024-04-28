@@ -1,0 +1,61 @@
+#:kivy 2.0.0
+
+<SEOAnalyzerUI>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+
+        Label:
+            text: 'Enter URL for SEO Analysis:'
+            size_hint_y: None
+            height: 30
+
+        TextInput:
+            id: url_input
+            multiline: False
+            size_hint_y: None
+            height: 30
+
+        Button:
+            text: 'Analyze'
+            size_hint_y: None
+            height: 50
+            on_release: root.analyze_url(url_input.text)
+
+        ScrollView:
+            size_hint: (1, 0.8)
+            do_scroll_x: False
+            do_scroll_y: True
+
+            Label:
+                id: result_area
+                text: ''
+                markup: True
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+
+        Button:
+            text: 'Export Results to CSV'
+            size_hint_y: None
+            height: 50
+            on_release: root.export_to_csv()
+<SettingsScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        Switch:
+            id: dark_mode_switch
+            active: False
+            on_active: app.toggle_dark_mode(self.active)
+        Slider:
+            id: analysis_depth_slider
+            min: 1
+            max: 10
+            value: 5
+        Button:
+            text: 'Apply Settings'
+            on_release: root.apply_settings()
+        Button:
+            text: 'Reset to Default'
+            on_release: root.reset_defaults()
